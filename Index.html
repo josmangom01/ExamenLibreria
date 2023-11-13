@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librería Siglo XXI</title>
+
+    <style>
+        body{
+            text-align: center;
+            font-family: "comic sans ms";
+        }
+        table, td, th{
+            border: solid 3px orange;
+            text-align: left;
+            padding-left: 5px;
+        }
+        table{
+            border-collapse: collapse;
+            margin: auto;
+            width: 90%;
+        }
+        tr:nth-child(odd){
+            background: #d8d8d8;
+        }
+        thead tr:nth-child(1){
+            background: #929292;
+        }
+        h1{
+            font-size:50px;
+            margin: 10px;
+        }
+        h2{
+            font-size: 25px;
+            margin: 10px;
+        }
+        th:nth-child(1){
+            width: 37.5%;
+        }
+        th:nth-child(2){
+            width: 18.75%;
+        }
+        th:nth-child(3){
+            width: 18.75%;
+        }
+        th:nth-child(4){
+            width: 12.5%;
+        }
+        th:nth-child(5){
+            width: 12.5%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Librería Siglo XXI</h1>
+    <h2>Listado de libros</h2>
+    <div id="divFiltro">
+        <input type="text" id="texFiltro">
+        <input type="button" value="Filtrar" id="btnFiltrar">
+        <input type="button" value="BorrarFiltro" id="btnBorrarFiltro">
+    </div>
+    <br>
+    <Table id="Libros">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Chapters</th>
+                <th>Pages</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="librosBody"></tbody>
+    </Table>
+    <script>
+        let btnFiltrar = document.getElementById("btnFiltrar");
+        let btnBorrarFiltro = document.getElementById("btnBorrarFiltro");
+        let texFiltro = document.getElementById("texFiltro");
+        btnFiltrar.addEventListener("click",()=>{
+            fetch("http://localhost:5170/api/Libros/Filtrar?cadena=" + texFiltro.value)
+            .then((response) => response.json())
+            .then((data) => {
+                let tbody = document.getElementById("librosBody");
+                let table = document.getElementById("Libros");
+                table.removeChild(tbody);
+                tbody = document.createElement("tBody");
+                tbody.id = "librosBody";
+                data.forEach(element => {
+                    let fila = document.createElement("tr");
+
+                    let celda = document.createElement("td");
+                    celda.innerText = element["title"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["autor"]["name"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["chapters"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["pages"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["price"];
+                    fila.appendChild(celda);
+
+                    tbody.appendChild(fila);
+                });
+                table.appendChild(tbody);
+            });
+            console.log(123)
+        });
+
+        btnBorrarFiltro.addEventListener("click",()=>{
+            fetch("http://localhost:5170/api/Libros")
+            .then((response) => response.json())
+            .then((data) => {
+                let tbody = document.getElementById("librosBody");
+                let table = document.getElementById("Libros");
+                table.removeChild(tbody);
+                tbody = document.createElement("tBody");
+                tbody.id = "librosBody";
+                data.forEach(element => {
+                    let fila = document.createElement("tr");
+
+                    let celda = document.createElement("td");
+                    celda.innerText = element["title"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["autor"]["name"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["chapters"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["pages"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["price"];
+                    fila.appendChild(celda);
+
+                    tbody.appendChild(fila);
+                });
+                table.appendChild(tbody);
+            });
+        });
+
+        fetch("http://localhost:5170/api/Libros")
+            .then((response) => response.json())
+            .then((data) => {
+                let tbody = document.getElementById("librosBody");
+                data.forEach(element => {
+                    let fila = document.createElement("tr");
+
+                    let celda = document.createElement("td");
+                    celda.innerText = element["title"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["autor"]["name"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["chapters"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["pages"];
+                    fila.appendChild(celda);
+
+                    celda = document.createElement("td");
+                    celda.innerText = element["price"];
+                    fila.appendChild(celda);
+
+                    tbody.appendChild(fila);
+                });
+            });
+    </script>
+</body>
+</html>
